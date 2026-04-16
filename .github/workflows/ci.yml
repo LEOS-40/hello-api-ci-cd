@@ -10,6 +10,17 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    services:
+      docker:
+        image: docker:24.0.5-dind
+        privileged: true
+        ports:
+          - 2375:2375
+        options: >-
+          --dns 8.8.8.8
+        env:
+          DOCKER_TLS_CERTDIR: ""
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,6 +35,12 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Enable Docker CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          docker --version
 
       - name: Build Docker image
         run: docker build -t hello-api .
