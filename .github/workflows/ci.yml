@@ -18,7 +18,10 @@ jobs:
           which npm || echo "npm not found"
           node -v || echo "node not found"
           npm -v || echo "npm not found"
-
+      - name: Debug Docker
+        run: |
+          which docker || echo "docker not found"
+          docker --version || echo "docker command failed"
       - name: Checkout code
         uses: actions/checkout@v4
 
