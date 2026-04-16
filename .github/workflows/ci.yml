@@ -1,8 +1,5 @@
 name: CI Pipeline
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 on:
   push:
     branches: [ "main" ]
@@ -27,9 +24,6 @@ jobs:
 
       - name: Run tests
         run: npm test
-
-      - name: Check Docker version
-        run: docker --version
 
       - name: Build Docker image
         run: docker build -t hello-api .
