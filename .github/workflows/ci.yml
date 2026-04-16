@@ -11,6 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+          steps:
+      - name: Debug runner
+        run: |
+          echo "Shell: $SHELL"
+          which bash || echo "bash not found"
+          which npm || echo "npm not found"
+          node -v || echo "node not found"
+          npm -v || echo "npm not found"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
