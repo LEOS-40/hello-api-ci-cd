@@ -1,5 +1,8 @@
 name: CI Pipeline
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches: [ "main" ]
@@ -9,17 +12,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
-    services:
-      docker:
-        image: docker:24.0.5-dind
-        privileged: true
-        ports:
-          - 2375:2375
-        options: >-
-          --dns 8.8.8.8
-        env:
-          DOCKER_TLS_CERTDIR: ""
 
     steps:
       - name: Checkout code
@@ -36,11 +28,8 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Enable Docker CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          docker --version
+      - name: Check Docker version
+        run: docker --version
 
       - name: Build Docker image
         run: docker build -t hello-api .
