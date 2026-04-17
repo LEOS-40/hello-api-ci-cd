@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Run ESLint
-        run: npx eslint src test
+        run: node ./node_modules/eslint/bin/eslint.js src test
 
   test:
     runs-on: ubuntu-latest
